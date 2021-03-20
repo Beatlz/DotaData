@@ -1,0 +1,17 @@
+{
+  "name": "DotaData",
+  "version": "1.0.0",
+  "description": "Discord bot that gets some awesome dota data.",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/node": "^14.14.35",
+    "axios": "^0.21.1",
+    "discord.js": "^12.5.1"
+  }
+}
