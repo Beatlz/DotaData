@@ -4,3 +4,5 @@ node_modules/
 credentials.json
 # Sandbox
 sandbox*
+# Users
+users.json
