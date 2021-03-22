@@ -6,3 +6,5 @@ credentials.json
 sandbox*
 # Users
 users.json
+# Database
+db.db
