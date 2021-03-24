@@ -38,10 +38,13 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 exports.__esModule = true;
 // Local resources
 var credentials = require("./credentials.json");
+var table_1 = require("./table");
+// const base64 = require("./sandbox-base64.json");
 // npm modules
 var nedb_async_await_1 = require("nedb-async-await");
 var Discord = require("discord.js");
 var axios_1 = require("axios");
+// Functions
 // Main run
 (function () { return __awaiter(void 0, void 0, void 0, function () {
     var client, prefix_1;
@@ -206,7 +209,7 @@ var axios_1 = require("axios");
                                 kills: function (limit) {
                                     if (limit === void 0) { limit = 30; }
                                     return __awaiter(this, void 0, void 0, function () {
-                                        var id, tag, tagged, kills_1, deaths_1, assists_1, url, response, matches, profile_1, msgEmbed, error_5;
+                                        var id, tag, tagged, kills_1, deaths_1, assists_1, url, response, matches, profile, msgEmbed, error_5;
                                         return __generator(this, function (_a) {
                                             switch (_a.label) {
                                                 case 0:
@@ -246,9 +249,9 @@ var axios_1 = require("axios");
                                                     });
                                                     return [4 /*yield*/, commands_1.profile(id)];
                                                 case 5:
-                                                    profile_1 = _a.sent();
+                                                    profile = _a.sent();
                                                     msgEmbed = new Discord.MessageEmbed()
-                                                        .setAuthor(profile_1.profile.personaname + " (" + msg.author.username + ")", profile_1.profile.avatar, "")
+                                                        .setAuthor(profile.profile.personaname + " (<@" + tag + ">)", profile.profile.avatar, "")
                                                         .setDescription("<@" + tag + "> KDA info for the last " + limit + " matches.")
                                                         .addFields({ name: 'Average KDR', value: (kills_1 / deaths_1).toFixed(2) }, { name: 'Kills', value: kills_1, inline: true }, { name: 'Deaths', value: deaths_1, inline: true }, { name: "Assists", value: assists_1, inline: true }, { name: 'Kills Ave.', value: (kills_1 / limit).toFixed(2), inline: true }, { name: 'Deaths Ave.', value: (deaths_1 / limit).toFixed(2), inline: true }, { name: "Assists Ave.", value: (assists_1 / limit).toFixed(2), inline: true })
                                                         .setTimestamp()
@@ -267,69 +270,26 @@ var axios_1 = require("axios");
                                 },
                                 standings: function () {
                                     return __awaiter(this, void 0, void 0, function () {
-                                        var exampleEmbed;
+                                        var img, buf, msgEmbed, error_6;
                                         return __generator(this, function (_a) {
-                                            try {
-                                                exampleEmbed = {
-                                                    color: 0x0099ff,
-                                                    title: 'Some title',
-                                                    url: 'https://discord.js.org',
-                                                    author: {
-                                                        name: 'Some name',
-                                                        icon_url: 'https://i.imgur.com/wSTFkRM.png',
-                                                        url: 'https://discord.js.org'
-                                                    },
-                                                    description: 'Some description here',
-                                                    thumbnail: {
-                                                        url: 'https://i.imgur.com/wSTFkRM.png'
-                                                    },
-                                                    fields: [
-                                                        {
-                                                            name: 'Regular field title',
-                                                            value: 'Some value here'
-                                                        },
-                                                        {
-                                                            name: '\u200b',
-                                                            value: '\u200b',
-                                                            inline: false
-                                                        },
-                                                        {
-                                                            name: 'Inline field title',
-                                                            value: '1',
-                                                            inline: true
-                                                        },
-                                                        {
-                                                            name: 'Inline field title',
-                                                            value: '2',
-                                                            inline: true
-                                                        },
-                                                        {
-                                                            name: 'Inline field title',
-                                                            value: '3',
-                                                            inline: true
-                                                        },
-                                                        {
-                                                            name: 'Inline field title',
-                                                            value: '4',
-                                                            inline: true
-                                                        }
-                                                    ],
-                                                    image: {
-                                                        url: 'https://i.imgur.com/wSTFkRM.png'
-                                                    },
-                                                    timestamp: new Date(),
-                                                    footer: {
-                                                        text: 'Some footer text here',
-                                                        icon_url: 'https://i.imgur.com/wSTFkRM.png'
-                                                    }
-                                                };
-                                                msg.channel.send({ embed: exampleEmbed });
+                                            switch (_a.label) {
+                                                case 0:
+                                                    _a.trys.push([0, 2, , 3]);
+                                                    return [4 /*yield*/, table_1["default"]()];
+                                                case 1:
+                                                    img = _a.sent();
+                                                    buf = new Buffer.from(img, "base64");
+                                                    msgEmbed = new Discord.MessageEmbed();
+                                                    msgEmbed.attachFiles(buf);
+                                                    msg.channel.send(msgEmbed);
+                                                    return [3 /*break*/, 3];
+                                                case 2:
+                                                    error_6 = _a.sent();
+                                                    msg.channel.send("standings() " + error_6);
+                                                    console.error(error_6);
+                                                    return [3 /*break*/, 3];
+                                                case 3: return [2 /*return*/];
                                             }
-                                            catch (error) {
-                                                msg.channel.send("standings() " + error);
-                                                console.error(error);
-                                            }
-                                            return [2 /*return*/];
                                         });
                                     });
                                 }

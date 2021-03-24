@@ -1,10 +1,12 @@
 // Local resources
 const credentials = require("./credentials.json");
+import table from "./table";
+// const base64 = require("./sandbox-base64.json");
 // npm modules
 import { Datastore } from "nedb-async-await";
 import * as Discord from "discord.js";
 import axios from "axios";
-import { profile } from "console";
+// Functions
 // Main run
 (async () => {
     try {
@@ -145,7 +147,7 @@ import { profile } from "console";
                             let profile = await commands.profile(id);
 
                             let msgEmbed = new Discord.MessageEmbed()
-                                .setAuthor(`${profile.profile.personaname} (${msg.author.username})`, profile.profile.avatar, "")
+                                .setAuthor(`${profile.profile.personaname} (<@${tag}>)`, profile.profile.avatar, "")
                                 .setDescription(`<@${tag}> KDA info for the last ${limit} matches.`)
                                 .addFields(
                                     { name: 'Average KDR', value: (kills / deaths).toFixed(2) },
@@ -167,61 +169,15 @@ import { profile } from "console";
                     },
                     async standings() {
                         try {
-                            const exampleEmbed = {
-                                color: 0x0099ff,
-                                title: 'Some title',
-                                url: 'https://discord.js.org',
-                                author: {
-                                    name: 'Some name',
-                                    icon_url: 'https://i.imgur.com/wSTFkRM.png',
-                                    url: 'https://discord.js.org',
-                                },
-                                description: 'Some description here',
-                                thumbnail: {
-                                    url: 'https://i.imgur.com/wSTFkRM.png',
-                                },
-                                fields: [
-                                    {
-                                        name: 'Regular field title',
-                                        value: 'Some value here',
-                                    },
-                                    {
-                                        name: '\u200b',
-                                        value: '\u200b',
-                                        inline: false,
-                                    },
-                                    {
-                                        name: 'Inline field title',
-                                        value: '1',
-                                        inline: true,
-                                    },
-                                    {
-                                        name: 'Inline field title',
-                                        value: '2',
-                                        inline: true,
-                                    },
-                                    {
-                                        name: 'Inline field title',
-                                        value: '3',
-                                        inline: true,
-                                    },
-                                    {
-                                        name: 'Inline field title',
-                                        value: '4',
-                                        inline: true,
-                                    }
-                                ],
-                                image: {
-                                    url: 'https://i.imgur.com/wSTFkRM.png',
-                                },
-                                timestamp: new Date(),
-                                footer: {
-                                    text: 'Some footer text here',
-                                    icon_url: 'https://i.imgur.com/wSTFkRM.png',
-                                },
-                            };
+                            // const img = base64.img.split(",").pop();
+                            const img = await table();
+                            // @ts-ignore
+                            const buf = new Buffer.from(img, "base64");
+                            const msgEmbed = new Discord.MessageEmbed();
 
-                            msg.channel.send({ embed: exampleEmbed });
+                            msgEmbed.attachFiles(buf);
+
+                            msg.channel.send(msgEmbed);
                         } catch (error) {
                             msg.channel.send(`standings() ${error}`);
                             console.error(error);
