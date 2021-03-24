@@ -8,3 +8,5 @@ sandbox*
 users.json
 # Database
 db.db
+# Cache
+.cache
